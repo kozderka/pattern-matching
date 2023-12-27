@@ -1,0 +1,44 @@
+{
+  "name": "@kozderka/pattern-matching",
+  "version": "0.0.1",
+  "description": "Pattern matching",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    "node": {
+      "import": "./src/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "default": "./src/index.js"
+  },
+  "scripts": {
+    "build": "rollup src/index.js --file dist/index.cjs --format cjs",
+    "dev": "node --test --watch test/",
+    "lint": "eslint --ext .js . --fix && prettier -c src test --write",
+    "test": "node --test --experimental-test-coverage test/",
+    "publish": "npm run lint && node --test && npm run build && npm publish --access public",
+    "docs": "documentation readme src/index.js --section=Documentation"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kozderka/pattern-matching.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kozderka/pattern-matching/issues"
+  },
+  "homepage": "https://github.com/kozderka/pattern-matching#readme",
+  "devDependencies": {
+    "documentation": "^14.0.2",
+    "eslint": "^8.49.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.28.1",
+    "eslint-plugin-n": "^16.1.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "prettier": "^3.0.1",
+    "rollup": "^3.29.1"
+  }
+}
