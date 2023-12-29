@@ -20,7 +20,7 @@
     "lint": "eslint --ext .js . --fix && prettier -c src test --write",
     "test": "node --test --experimental-test-coverage test/",
     "publish": "npm run lint && node --test && npm run build && npm publish --access public",
-    "docs": "documentation readme src/index.js --section=Documentation"
+    "docs": "documentation readme src/index.js --section=Documentation --document-exported"
   },
   "repository": {
     "type": "git",
