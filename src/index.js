@@ -22,7 +22,7 @@ import isFunction from 'lodash.isfunction'
  * @param {V} value
  * @returns {PatternBuilder}
  */
-export function match (value) {
+export function match(value) {
   return patternBuilder(value)(null)([])
 }
 
@@ -31,28 +31,34 @@ export function match (value) {
  * @param {*} value
  * @returns {(function) => (function[]) => PatternBuilder}
  */
-function patternBuilder (value) {
-  return (otherwise) => (patterns = []) => {
-    return {
-      where: function (pattern, callback) {
-        return patternBuilder(value)(otherwise)([...patterns, { pattern, callback }])
-      },
-      otherwise: function (otherwise) {
-        return patternBuilder(value)(otherwise)(patterns)
-      },
-      run: function () {
-        const pattern = patterns.find(({ pattern }) => matchPattern(value)(pattern))
-        console.log(pattern)
-        if (pattern) {
-          return pattern.callback(value)
-        } else if (otherwise) {
-          return otherwise(value)
-        }
+function patternBuilder(value) {
+  return (otherwise) =>
+    (patterns = []) => {
+      return {
+        where: function (pattern, callback) {
+          return patternBuilder(value)(otherwise)([
+            ...patterns,
+            { pattern, callback },
+          ])
+        },
+        otherwise: function (otherwise) {
+          return patternBuilder(value)(otherwise)(patterns)
+        },
+        run: function () {
+          const pattern = patterns.find(({ pattern }) =>
+            matchPattern(value)(pattern),
+          )
+          console.log(pattern)
+          if (pattern) {
+            return pattern.callback(value)
+          } else if (otherwise) {
+            return otherwise(value)
+          }
 
-        return null
+          return null
+        },
       }
     }
-  }
 }
 
 /**
@@ -60,11 +66,11 @@ function patternBuilder (value) {
  * @param {*} value
  * @returns {boolean}
  */
-function matchPattern (value) {
+function matchPattern(value) {
   return (pattern) => {
     if (isFunction(pattern)) {
       return pattern(value) === true
-    } else if ((typeof pattern) !== 'object') {
+    } else if (typeof pattern !== 'object') {
       return pattern === value
     } else {
       return Object.keys(pattern).every((key) => {
