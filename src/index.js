@@ -1,3 +1,5 @@
+import isFunction from 'lodash.isfunction'
+
 /**
  * @typedef {Object} PatternBuilder
  * @property {function(*, function): PatternBuilder} where
@@ -8,9 +10,7 @@
 /**
  * @example
  * const result = match(1)
- *  .where(Number, (value) => 'Number')
- *  .where(String, (value) => 'String')
- *  .where(Boolean, (value) => 'Boolean')
+ *  .where((value) => value === 1, (value) => '2')
  *  .where(2, (value) => '2')
  *  .where('text', (value) => 'text')
  *  .where(true, (value) => 'true')
@@ -62,12 +62,8 @@ function patternBuilder (value) {
  */
 function matchPattern (value) {
   return (pattern) => {
-    if (String === pattern && (typeof value) === 'string') {
-      return true
-    } else if (Number === pattern && isNaN(value) === false && (typeof value) === 'number') {
-      return true
-    } else if (Boolean === pattern && (typeof value) === 'boolean') {
-      return true
+    if (isFunction(pattern)) {
+      return pattern(value) === true
     } else if ((typeof pattern) !== 'object') {
       return pattern === value
     } else {
