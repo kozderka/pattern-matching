@@ -40,9 +40,7 @@ Type: [Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Globa
 
 ```javascript
 const result = match(1)
- .where(Number, (value) => 'Number')
- .where(String, (value) => 'String')
- .where(Boolean, (value) => 'Boolean')
+ .where((value) => value === 1, (value) => '2')
  .where(2, (value) => '2')
  .where('text', (value) => 'text')
  .where(true, (value) => 'true')
