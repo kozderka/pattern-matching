@@ -1,6 +1,6 @@
 {
   "name": "@kozderka/pattern-matching",
-  "version": "0.0.1",
+  "version": "0.0.1-beta.0",
   "description": "Pattern matching",
   "engines": {
     "node": ">=20.0.0"
