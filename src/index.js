@@ -2,13 +2,15 @@ import isFunction from 'lodash.isfunction'
 
 /**
  * @typedef {Object} PatternBuilder
- * @property {function(*, function): PatternBuilder} where
- * @property {function(function): PatternBuilder} otherwise
- * @property {function} run
+ * @property {(*, (*)=>*)=>PatternBuilder} where
+ * @property {((*)=>*)=>PatternBuilder} otherwise
+ * @property {()=>*} run
  */
 
 /**
  * @example
+ * import match from '@kozderka/pattern-matching'
+ *
  * const result = match(1)
  *  .where((value) => value === 1, (value) => '2')
  *  .where(2, (value) => '2')
@@ -22,14 +24,14 @@ import isFunction from 'lodash.isfunction'
  * @param {V} value
  * @returns {PatternBuilder}
  */
-export function match(value) {
+export default function match(value) {
   return patternBuilder(value)(null)([])
 }
 
 /**
  *
  * @param {*} value
- * @returns {(function) => (function[]) => PatternBuilder}
+ * @returns {((*)=>*)=>({pattern: *, callback: (*)=>*})=>PatternBuilder}
  */
 function patternBuilder(value) {
   return (otherwise) =>
@@ -48,7 +50,7 @@ function patternBuilder(value) {
           const pattern = patterns.find(({ pattern }) =>
             matchPattern(value)(pattern),
           )
-          console.log(pattern)
+
           if (pattern) {
             return pattern.callback(value)
           } else if (otherwise) {
@@ -64,7 +66,7 @@ function patternBuilder(value) {
 /**
  *
  * @param {*} value
- * @returns {boolean}
+ * @returns {(*)=>boolean}
  */
 function matchPattern(value) {
   return (pattern) => {

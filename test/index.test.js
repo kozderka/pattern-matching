@@ -1,6 +1,6 @@
 import { describe, test } from 'node:test'
 import assert from 'node:assert'
-import { match } from '../src/index.js'
+import match from '../src/index.js'
 
 describe('Check all patterns', () => {
   test('Otherwise', () => {

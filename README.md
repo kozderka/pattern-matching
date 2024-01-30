@@ -15,7 +15,6 @@ Package provides functionality for pattern matching.
 #### Table of Contents
 
 *   [PatternBuilder](#patternbuilder)
-    *   [Properties](#properties)
 *   [match](#match)
     *   [Parameters](#parameters)
     *   [Examples](#examples)
@@ -23,12 +22,6 @@ Package provides functionality for pattern matching.
 ### PatternBuilder
 
 Type: [Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)
-
-#### Properties
-
-*   `where` **function (any, [function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)): [PatternBuilder](#patternbuilder)**&#x20;
-*   `otherwise` **function ([function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)): [PatternBuilder](#patternbuilder)**&#x20;
-*   `run` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)**&#x20;
 
 ### match
 
@@ -39,6 +32,8 @@ Type: [Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Globa
 #### Examples
 
 ```javascript
+import match from '@kozderka/pattern-matching'
+
 const result = match(1)
  .where((value) => value === 1, (value) => '2')
  .where(2, (value) => '2')
